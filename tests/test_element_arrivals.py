@@ -2,7 +2,7 @@ import time
 from selenium.webdriver.common.by import By
 
 from methods import wait_elem_by_id, wait_elem_by_xpath, get_elem_by_xpath, wait_elem_clickable_by_xpath, \
-    get_elem_by_id, scroll_to_elem
+    get_elem_by_id, scroll_to_elem, get_prices_list, change_currency
 
 
 def test_search_for_carousel(browser, get_url):
@@ -102,22 +102,32 @@ def test_prices_change_when_change_currency(browser, get_url):
 
     table_elem = get_elem_by_xpath(browser, "//div[@class='row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4']")
     all_prices_elems = table_elem.find_elements(By.XPATH, "//span[@class='price-new']")
-    prices_list = []
-    for price_elem in all_prices_elems:
-        prices_list.append(price_elem.text)
+    prices_list = get_prices_list(all_prices_elems)
 
-    currency_choose_button = get_elem_by_xpath(browser, "//span[text()='Currency']")
-    time.sleep(10)
-    currency_choose_button.click()
-    currency_button = get_elem_by_xpath(browser, "//a[@href='EUR']")
-    time.sleep(10)
-    currency_button.click()
+    change_currency(browser)
 
     table_elem = get_elem_by_xpath(browser, "//div[@class='row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4']")
     all_prices_elems = table_elem.find_elements(By.XPATH, "//span[@class='price-new']")
-    prices_list_changed = []
-    for price_elem in all_prices_elems:
-        prices_list_changed.append(price_elem.text)
+    prices_list_changed = get_prices_list(all_prices_elems)
 
     assert prices_list != prices_list_changed
 
+
+def test_prices_change_in_catalog_when_change_currency(browser, get_url):
+    browser = browser
+    url = get_url
+    browser.get(url+"catalog/desktops")
+
+    catalog_product_list = get_elem_by_id(browser, "product-list")
+
+    all_prices_elems = catalog_product_list.find_elements(By.XPATH, "//span[@class='price-new']")
+    prices_list = get_prices_list(all_prices_elems)
+
+    change_currency(browser)
+
+    catalog_product_list = get_elem_by_id(browser, "product-list")
+
+    all_prices_elems = catalog_product_list.find_elements(By.XPATH, "//span[@class='price-new']")
+    prices_list_changed = get_prices_list(all_prices_elems)
+
+    assert prices_list != prices_list_changed
