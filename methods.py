@@ -8,7 +8,6 @@ from selenium.webdriver.support import expected_conditions as EC
 def get_elem_by_id(browser, elem_id):
     try:
         element = WebDriverWait(browser, 10).until(
-            # EC.visibility_of_element_located((By.ID, elem_id))
             EC.presence_of_element_located((By.ID, elem_id))
         )
     except NoSuchElementException:
@@ -19,7 +18,6 @@ def get_elem_by_id(browser, elem_id):
 def get_elem_by_xpath(browser, elem_xpath):
     try:
         element = WebDriverWait(browser, 10).until(
-            # EC.visibility_of_element_located((By.XPATH, elem_xpath))
             EC.presence_of_element_located((By.XPATH, elem_xpath))
         )
     except NoSuchElementException:
@@ -30,7 +28,6 @@ def get_elem_by_xpath(browser, elem_xpath):
 def wait_elem_by_id(browser, elem_id):
     try:
         WebDriverWait(browser, 10).until(
-            # EC.visibility_of_element_located((By.XPATH, elem_id))
             EC.presence_of_element_located((By.ID, elem_id))
         )
     except NoSuchElementException:
@@ -41,18 +38,7 @@ def wait_elem_by_id(browser, elem_id):
 def wait_elem_by_xpath(browser, elem_xpath):
     try:
         WebDriverWait(browser, 10).until(
-            # EC.visibility_of_element_located((By.XPATH, elem_xpath))
             EC.presence_of_element_located((By.XPATH, elem_xpath))
-        )
-    except NoSuchElementException:
-        return False
-    return True
-
-
-def wait_elem_clickable_by_xpath(browser, elem_xpath):
-    try:
-        WebDriverWait(browser, 20).until(
-            EC.element_to_be_clickable((By.XPATH, elem_xpath))
         )
     except NoSuchElementException:
         return False
@@ -61,6 +47,8 @@ def wait_elem_clickable_by_xpath(browser, elem_xpath):
 
 def scroll_to_elem(browser, element):
     browser.execute_script("arguments[0].scrollIntoView(true);", element)
+    time.sleep(3)
+
 
 def get_prices_list(all_prices_elems):
     prices_list = []
@@ -70,10 +58,10 @@ def get_prices_list(all_prices_elems):
 
 
 def change_currency(browser):
-    currency_choose_button = get_elem_by_xpath(browser, "//span[text()='Currency']")
+    currency_choose_button = get_elem_by_xpath(browser,
+                                               "//span[text()='Currency']")
     time.sleep(10)
     currency_choose_button.click()
     currency_button = get_elem_by_xpath(browser, "//a[@href='EUR']")
     time.sleep(10)
     currency_button.click()
-

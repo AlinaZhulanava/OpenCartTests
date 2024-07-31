@@ -1,18 +1,26 @@
 import pytest
 from selenium import webdriver
+
+
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="Chrome", help="choose a browser")
-    parser.addoption("--url", action="store", default="http://localhost/", help="url for OpenCart")
+    parser.addoption("--browser",
+                     action="store", default="Chrome", help="choose a browser")
+    parser.addoption("--url",
+                     action="store", default="http://localhost/",
+                     help="url for OpenCart")
+
 
 @pytest.fixture
 def get_browser(request):
     browser_chosen = request.config.getoption("--browser")
     return browser_chosen
 
+
 @pytest.fixture
 def get_url(request):
     url = request.config.getoption("--url")
     return url
+
 
 @pytest.fixture
 def browser(get_browser):
