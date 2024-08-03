@@ -3,6 +3,8 @@ import time
 
 class TopPanel:
     shopping_cart_xpath = "//a[@title='Shopping Cart']"
+    my_account_button_xpath = "//i[@class='fa-solid fa-user']"
+    logout_button_xpath = "//a[text()='Logout']"
     currency_choose_button_xpath = "//span[text()='Currency']"
     currency_euro_xpath = "//a[@href='EUR']"
 
@@ -14,19 +16,31 @@ class TopPanel:
 
 
     def click_shopping_cart(self):
-        get_elem_by_xpath(self.browser, self.shopping_cart_xpath).click()
+        self.get_shopping_cart().click()
+
+    def get_my_account_button(self):
+        return get_elem_by_xpath(self.browser, self.my_account_button_xpath)
+
+    def click_my_account_button(self):
+        self.get_my_account_button().click()
+
+    def get_logout_button(self):
+        return get_elem_by_xpath(self.browser, self.logout_button_xpath)
+
+    def click_logout_button(self):
+        self.get_logout_button().click()
 
     def get_currency_choose_button(self):
         return get_elem_by_xpath(self.browser, self.currency_choose_button_xpath)
 
     def click_currency_choose_button(self):
-        get_elem_by_xpath(self.browser, self.currency_choose_button_xpath).click()
+        self.get_currency_choose_button().click()
 
     def get_euro_button(self):
         return get_elem_by_xpath(self.browser, self.currency_euro_xpath)
 
     def click_euro_button(self):
-        get_elem_by_xpath(self.browser, self.currency_euro_xpath).click()
+        self.get_euro_button().click()
 
     def change_currency_to_euro(self):
         time.sleep(10)

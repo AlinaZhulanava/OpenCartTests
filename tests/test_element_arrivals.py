@@ -1,85 +1,75 @@
 import time
 
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
 from AdminPage import AdminPage
+from CatalogPage import CatalogPage
+from LoginPage import LoginPage
 from MainPage import MainPage
+from ProductPage import ProductPage
+from RegisterPage import RegisterPage
 from ShoppingCartPage import ShoppingCartPage
 from TopPanel import TopPanel
 from methods import (wait_elem_by_id, wait_elem_by_xpath, get_elem_by_xpath,
                      get_elem_by_id, scroll_to_elem,
-                     get_prices_list, change_currency)
+                     get_prices_list)
 
 
 def test_search_for_carousel(browser, get_url):
-    browser = browser
-    url = get_url
-    browser.get(url)
+    main_page = MainPage(browser, get_url)
+    main_page.open_page()
 
-    assert wait_elem_by_id(browser, "carousel-banner-0") is True
+    assert main_page.find_carousel() is True
 
 
 def test_search_for_product_list(browser, get_url):
-    browser = browser
-    url = get_url + "en-gb/catalog/desktops"
-    browser.get(url)
+    catalog_page = CatalogPage(browser, get_url + "en-gb/catalog/desktops")
+    catalog_page.open_page()
 
-    assert wait_elem_by_id(browser, "product-list") is True
+    assert catalog_page.find_catalog_product_list() is True
 
 
 def test_search_product_card(browser, get_url):
-    browser = browser
-    url = get_url + "en-gb/product/iphone"
-    browser.get(url)
+    product_page = ProductPage(browser, get_url, "iphone")
+    product_page.open_page()
 
-    assert wait_elem_by_id(browser, "product-info") is True
+    assert product_page.find_product_info() is True
 
 
 def test_search_administration(browser, get_url):
-    browser = browser
-    url = get_url + "administration/"
-    browser.get(url)
+    admin_page = AdminPage(browser, get_url + "administration/")
+    admin_page.open_page()
 
-    assert wait_elem_by_xpath(browser,
-                              "//div[text()="
-                              "' Please enter your login details.']") is True
+    assert admin_page.find_form_label() is True
 
 
 def test_search_registration(browser, get_url):
-    browser = browser
-    url = get_url + "/index.php?route=account/register"
-    browser.get(url)
+    registration_page = RegisterPage(browser, get_url + "/index.php?route=account/register")
+    registration_page.open_page()
 
-    assert wait_elem_by_xpath(browser,
-                              "//h1[text()='Register Account']") is True
+    assert registration_page.find_register_label() is True
 
 
 def test_user_login(browser, get_url):
-    browser = browser
-    url = get_url + "/en-gb?route=account/login"
-    browser.get(url)
+    login_page = LoginPage(browser, get_url + "en-gb?route=account/login")
+    login_page.open_page()
 
-    email = get_elem_by_xpath(browser, "//input[@name='email']")
-    email.send_keys("ali.zhulanova@gmail.com")
-    password = get_elem_by_xpath(browser, "//input[@name='password']")
-    password.send_keys("password")
-    button = get_elem_by_xpath(browser, "//button[text()='Login']")
-    button.click()
+    login_page.fill_email()
+    login_page.fill_password()
+    login_page.click_login_button()
 
-    wait_elem_by_xpath(browser, "//h2[text()='My Account']")
-    dropdown = get_elem_by_xpath(browser, "//i[@class='fa-solid fa-user']")
-    dropdown.click()
-    logout = get_elem_by_xpath(browser, "//a[text()='Logout']")
-    logout.click()
+    login_page.find_my_account_label()
 
-    assert wait_elem_by_xpath(browser, "//h1[text()='Account Logout']") is True
+    top_panel = TopPanel(browser)
+    top_panel.click_my_account_button()
+    top_panel.click_logout_button()
+
+    assert login_page.find_account_logout_label() is True
 
 
 def test_admin_login(browser, get_url):
-    browser = browser
-    url = get_url + "administration"
-    admin_page = AdminPage(browser, url)
+    admin_page = AdminPage(browser, get_url + "administration")
+    admin_page.open_page()
 
     admin_page.fill_email()
     admin_page.fill_password()
@@ -90,9 +80,8 @@ def test_admin_login(browser, get_url):
 
 
 def test_add_to_cart(browser, get_url):
-    browser = browser
-    url = get_url
-    main_page = MainPage(browser, url)
+    main_page = MainPage(browser, get_url)
+    main_page.open_page()
 
     main_page.find_first_product()
 
@@ -112,54 +101,30 @@ def test_add_to_cart(browser, get_url):
 
 
 def test_prices_change_when_change_currency(browser, get_url):
-    browser = browser
-    url = get_url
-    browser.get(url)
+    main_page = MainPage(browser, get_url)
+    main_page.open_page()
 
-    table_elem = get_elem_by_xpath(browser,
-                                   "//div[@class='row row-cols-1 "
-                                   "row-cols-sm-2 row-cols-md-3 "
-                                   "row-cols-xl-4']")
-    all_prices_elems = table_elem.find_elements(By.XPATH,
-                                                "//span[@class='price-new']")
-    prices_list = get_prices_list(all_prices_elems)
+    prices_list = main_page.get_list_of_all_prices_from_table()
 
-    #change_currency(browser)
     top_panel = TopPanel(browser)
     top_panel.click_currency_choose_button()
     top_panel.click_euro_button()
 
-    table_elem = get_elem_by_xpath(browser,
-                                   "//div[@class='row row-cols-1 "
-                                   "row-cols-sm-2 row-cols-md-3 "
-                                   "row-cols-xl-4']")
-    all_prices_elems = table_elem.find_elements(By.XPATH,
-                                                "//span[@class='price-new']")
-    prices_list_changed = get_prices_list(all_prices_elems)
+    prices_list_changed = main_page.get_list_of_all_prices_from_table()
 
     assert prices_list != prices_list_changed
 
 
 def test_prices_change_in_catalog_when_change_currency(browser, get_url):
-    browser = browser
-    url = get_url
-    browser.get(url + "catalog/desktops")
+    catalog_page = CatalogPage(browser, get_url + "catalog/desktops")
+    catalog_page.open_page()
 
-    catalog_product_list = get_elem_by_id(browser, "product-list")
+    prices_list = catalog_page.get_list_of_all_prices_from_table()
 
-    all_prices_elems = (catalog_product_list
-                        .find_elements(By.XPATH, "//span[@class='price-new']"))
-    prices_list = get_prices_list(all_prices_elems)
-
-    #change_currency(browser)
     top_panel = TopPanel(browser)
     top_panel.click_currency_choose_button()
     top_panel.click_euro_button()
 
-    catalog_product_list = get_elem_by_id(browser, "product-list")
-
-    all_prices_elems = (catalog_product_list
-                        .find_elements(By.XPATH, "//span[@class='price-new']"))
-    prices_list_changed = get_prices_list(all_prices_elems)
+    prices_list_changed = catalog_page.get_list_of_all_prices_from_table()
 
     assert prices_list != prices_list_changed

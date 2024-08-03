@@ -1,16 +1,16 @@
 from methods import get_elem_by_xpath, wait_elem_by_xpath
 
 
-class AdminPage:
-    form_label_xpath = ("//div[text()="
-                        "' Please enter your login details.']")
-    email_xpath = "//input[@name='username']"
+class LoginPage:
+    email_xpath = "//input[@name='email']"
     password_xpath = "//input[@name='password']"
-    user_email = "user"
-    user_password = "bitnami"
-    login_button_xpath = "//button[text()=' Login']"
-    logout_button_xpath = "//span[text()='Logout']"
-    avatar_xpath = "//img[@class='rounded-circle']"
+    user_email = "ali.zhulanova@gmail.com"
+    user_password = "password"
+    login_button_xpath = "//button[text()='Login']"
+    logout_button_xpath = "//a[text()='Logout']"
+
+    label_my_account_xpath = "//h2[text()='My Account']"
+    label_account_logout = "//h1[text()='Account Logout']"
 
     def __init__(self, browser, url):
         self.browser = browser
@@ -19,8 +19,6 @@ class AdminPage:
     def open_page(self):
         self.browser.get(self.url)
 
-    def find_form_label(self):
-        return wait_elem_by_xpath(self.browser, self.form_label_xpath)
 
     def get_email(self):
         return get_elem_by_xpath(self.browser, self.email_xpath)
@@ -46,5 +44,9 @@ class AdminPage:
     def click_logout_button(self):
         self.get_logout_button().click()
 
-    def check_if_avatar_presented(self):
-        return wait_elem_by_xpath(self.browser, self.avatar_xpath)
+    def find_my_account_label(self):
+        return wait_elem_by_xpath(self.browser, self.label_my_account_xpath)
+
+    def find_account_logout_label(self):
+        return wait_elem_by_xpath(self.browser, self.label_account_logout)
+

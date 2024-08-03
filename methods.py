@@ -57,11 +57,11 @@ def get_prices_list(all_prices_elems):
     return prices_list
 
 
-def change_currency(browser):
-    currency_choose_button = get_elem_by_xpath(browser,
-                                               "//span[text()='Currency']")
-    time.sleep(10)
-    currency_choose_button.click()
-    currency_button = get_elem_by_xpath(browser, "//a[@href='EUR']")
-    time.sleep(10)
-    currency_button.click()
+# def change_currency(browser):
+#     currency_choose_button = get_elem_by_xpath(browser,
+#                                                "//span[text()='Currency']")
+#     time.sleep(10)
+#     currency_choose_button.click()
+#     currency_button = get_elem_by_xpath(browser, "//a[@href='EUR']")
+#     time.sleep(10)
+#     currency_button.click()
