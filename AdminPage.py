@@ -1,5 +1,6 @@
-from methods import get_elem_by_xpath, wait_elem_by_xpath, get_elem_by_id, wait_alert
-from selenium.webdriver.common.by import By
+import time
+
+from methods import get_elem_by_xpath, wait_elem_by_xpath, get_elem_by_id, get_alert
 
 
 class AdminPage:
@@ -17,6 +18,7 @@ class AdminPage:
     admin_menu_catalog_products_xpath = "//a[text()='Products']"
 
     add_product_button_xpath = "//a[@class='btn btn-primary']"
+    delete_product_button_xpath = "//button[@class='btn btn-danger']"
     save_product_button_xpath = "//button[@class='btn btn-primary']"
     new_product_name_id = "input-name-1"
     new_product_meta_tag_id = "input-meta-title-1"
@@ -30,6 +32,8 @@ class AdminPage:
     user_new_product_seo_keyword = "1"
 
     alert_add_product_success_xpath = "//div[@class='alert alert-success alert-dismissible']"
+
+    product_to_delete_xpath = "//input[@value='42']"
 
     def __init__(self, browser, url):
         self.browser = browser
@@ -142,3 +146,19 @@ class AdminPage:
 
     def find_alert_add_product_success(self):
         return wait_elem_by_xpath(self.browser, self.alert_add_product_success_xpath)
+
+    def get_delete_product_button(self):
+        return get_elem_by_xpath(self.browser, self.delete_product_button_xpath)
+
+    def click_delete_product_button(self):
+        self.get_delete_product_button().click()
+
+    def submit_alert(self):
+        get_alert(self.browser).accept()
+
+
+    def get_product_to_delete(self):
+        return get_elem_by_xpath(self.browser, self.product_to_delete_xpath)
+
+    def choose_product_to_delete(self):
+        self.get_product_to_delete().click()

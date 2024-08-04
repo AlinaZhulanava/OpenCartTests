@@ -20,7 +20,7 @@ def get_elem_by_xpath(browser, elem_xpath):
         element = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.XPATH, elem_xpath))
         )
-    except NoSuchElementException:
+    except TimeoutException:
         return None
     return element
 
@@ -45,13 +45,13 @@ def wait_elem_by_xpath(browser, elem_xpath):
     return True
 
 
-def wait_alert(browser):
+def get_alert(browser):
     try:
-        WebDriverWait(browser, 10).until(
+        alert = WebDriverWait(browser, 10).until(
             EC.alert_is_present())
     except TimeoutException:
-        return False
-    return True
+        return None
+    return alert
 
 
 def scroll_to_elem(browser, element):
