@@ -45,6 +45,15 @@ def wait_elem_by_xpath(browser, elem_xpath):
     return True
 
 
+def wait_alert(browser):
+    try:
+        WebDriverWait(browser, 10).until(
+            EC.alert_is_present())
+    except TimeoutException:
+        return False
+    return True
+
+
 def scroll_to_elem(browser, element):
     browser.execute_script("arguments[0].scrollIntoView(true);", element)
     time.sleep(3)

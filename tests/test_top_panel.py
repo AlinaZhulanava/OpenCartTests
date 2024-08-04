@@ -1,5 +1,3 @@
-import time
-
 from TopPanel import TopPanel
 
 
