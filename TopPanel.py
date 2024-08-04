@@ -1,20 +1,31 @@
 from methods import get_elem_by_xpath, wait_elem_by_xpath
 import time
 
+
 class TopPanel:
     shopping_cart_xpath = "//a[@title='Shopping Cart']"
     my_account_button_xpath = "//i[@class='fa-solid fa-user']"
     register_button_xpath = "//a[text()='Register']"
     logout_button_xpath = "//a[text()='Logout']"
     currency_choose_button_xpath = "//span[text()='Currency']"
-    currency_euro_xpath = "//a[@href='EUR']"
 
-    def __init__(self, browser):
+    currency_sign_euro_xpath = "//strong[text()='€']"
+    currency_sign_pound_xpath = "//strong[text()='£']"
+    currency_sign_dollar_xpath = "//strong[text()='$']"
+
+    currency_euro_xpath = "//a[@href='EUR']"
+    currency_pound_xpath = "//a[@href='GBP']"
+    currency_dollar_xpath = "//a[@href='USD']"
+
+    def __init__(self, browser, url):
         self.browser = browser
+        self.url = url
+
+    def open_page(self):
+        self.browser.get(self.url)
 
     def get_shopping_cart(self):
         return get_elem_by_xpath(self.browser, self.shopping_cart_xpath)
-
 
     def click_shopping_cart(self):
         self.get_shopping_cart().click()
@@ -37,21 +48,31 @@ class TopPanel:
     def click_logout_button(self):
         self.get_logout_button().click()
 
+    def get_displayed_currency(self):
+        if wait_elem_by_xpath(self.browser, self.currency_sign_dollar_xpath):
+            return "USD"
+        elif wait_elem_by_xpath(self.browser, self.currency_sign_euro_xpath):
+            return "EUR"
+        elif wait_elem_by_xpath(self.browser, self.currency_sign_pound_xpath):
+            return "GBP"
+
     def get_currency_choose_button(self):
         return get_elem_by_xpath(self.browser, self.currency_choose_button_xpath)
 
     def click_currency_choose_button(self):
         self.get_currency_choose_button().click()
 
-    def get_euro_button(self):
-        return get_elem_by_xpath(self.browser, self.currency_euro_xpath)
+    def get_currency_option_button(self, currency):
+        if currency == "EUR":
+            return get_elem_by_xpath(self.browser, self.currency_euro_xpath)
+        elif currency == "USD":
+            return get_elem_by_xpath(self.browser, self.currency_dollar_xpath)
+        elif currency == "GBP":
+            return get_elem_by_xpath(self.browser, self.currency_pound_xpath)
 
-    def click_euro_button(self):
-        self.get_euro_button().click()
+    def click_currency_option_button(self, currency):
+        self.get_currency_option_button(currency).click()
 
-    def change_currency_to_euro(self):
-        time.sleep(10)
+    def change_currency_to_another(self, currency):
         self.click_currency_choose_button()
-        time.sleep(10)
-        self.click_euro_button()
-
+        self.click_currency_option_button(currency)

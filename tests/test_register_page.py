@@ -18,7 +18,7 @@ def test_register_new_user(browser, get_url):
 
     register_page = RegisterPage(browser, get_url + "en-gb?route=account/register")
 
-    top_panel = TopPanel(browser)
+    top_panel = TopPanel(browser, get_url)
     top_panel.click_my_account_button()
     top_panel.click_register_button()
 

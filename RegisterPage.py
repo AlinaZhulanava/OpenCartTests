@@ -29,7 +29,7 @@ class RegisterPage:
         wait_elem_by_xpath(self.browser, self.account_created_label_xpath)
 
     def find_register_label(self):
-        wait_elem_by_xpath(self.browser, self.register_label_xpath)
+        return wait_elem_by_xpath(self.browser, self.register_label_xpath)
 
     def get_first_name(self):
         return get_elem_by_xpath(self.browser, self.first_name_xpath)

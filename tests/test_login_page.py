@@ -12,7 +12,7 @@ def test_user_login(browser, get_url):
 
     login_page.find_my_account_label()
 
-    top_panel = TopPanel(browser)
+    top_panel = TopPanel(browser, get_url)
     top_panel.click_my_account_button()
     top_panel.click_logout_button()
 

@@ -1,6 +1,6 @@
 import time
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -40,7 +40,7 @@ def wait_elem_by_xpath(browser, elem_xpath):
         WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.XPATH, elem_xpath))
         )
-    except NoSuchElementException:
+    except TimeoutException:
         return False
     return True
 
@@ -55,13 +55,3 @@ def get_prices_list(all_prices_elems):
     for price_elem in all_prices_elems:
         prices_list.append(price_elem.text)
     return prices_list
-
-
-# def change_currency(browser):
-#     currency_choose_button = get_elem_by_xpath(browser,
-#                                                "//span[text()='Currency']")
-#     time.sleep(10)
-#     currency_choose_button.click()
-#     currency_button = get_elem_by_xpath(browser, "//a[@href='EUR']")
-#     time.sleep(10)
-#     currency_button.click()

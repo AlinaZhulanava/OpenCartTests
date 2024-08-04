@@ -8,15 +8,15 @@ def test_search_for_product_list(browser, get_url):
 
     assert catalog_page.find_catalog_product_list() is True
 
+
 def test_prices_change_in_catalog_when_change_currency(browser, get_url):
     catalog_page = CatalogPage(browser, get_url + "catalog/desktops")
     catalog_page.open_page()
 
     prices_list = catalog_page.get_list_of_all_prices_from_table()
 
-    top_panel = TopPanel(browser)
-    top_panel.click_currency_choose_button()
-    top_panel.click_euro_button()
+    top_panel = TopPanel(browser, get_url)
+    top_panel.change_currency_to_another("EUR")
 
     prices_list_changed = catalog_page.get_list_of_all_prices_from_table()
 

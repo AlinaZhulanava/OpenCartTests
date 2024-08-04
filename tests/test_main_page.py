@@ -27,7 +27,7 @@ def test_add_to_cart(browser, get_url):
     scroll_to_elem(main_page.browser, main_page.get_elem_for_compare())
     xpath_to_compare = main_page.get_xpath_to_compare()
 
-    top_panel = TopPanel(browser)
+    top_panel = TopPanel(browser, get_url)
     scroll_to_elem(top_panel.browser, top_panel.get_shopping_cart())
     top_panel.click_shopping_cart()
 
@@ -41,9 +41,8 @@ def test_prices_change_when_change_currency(browser, get_url):
 
     prices_list = main_page.get_list_of_all_prices_from_table()
 
-    top_panel = TopPanel(browser)
-    top_panel.click_currency_choose_button()
-    top_panel.click_euro_button()
+    top_panel = TopPanel(browser, get_url)
+    top_panel.change_currency_to_another("EUR")
 
     prices_list_changed = main_page.get_list_of_all_prices_from_table()
 
