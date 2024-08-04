@@ -4,6 +4,7 @@ import time
 class TopPanel:
     shopping_cart_xpath = "//a[@title='Shopping Cart']"
     my_account_button_xpath = "//i[@class='fa-solid fa-user']"
+    register_button_xpath = "//a[text()='Register']"
     logout_button_xpath = "//a[text()='Logout']"
     currency_choose_button_xpath = "//span[text()='Currency']"
     currency_euro_xpath = "//a[@href='EUR']"
@@ -23,6 +24,12 @@ class TopPanel:
 
     def click_my_account_button(self):
         self.get_my_account_button().click()
+
+    def get_register_button(self):
+        return get_elem_by_xpath(self.browser, self.register_button_xpath)
+
+    def click_register_button(self):
+        self.get_register_button().click()
 
     def get_logout_button(self):
         return get_elem_by_xpath(self.browser, self.logout_button_xpath)
