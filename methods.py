@@ -1,6 +1,6 @@
 import time
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -10,7 +10,7 @@ def get_elem_by_id(browser, elem_id):
         element = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.ID, elem_id))
         )
-    except NoSuchElementException:
+    except TimeoutException:
         return None
     return element
 
@@ -30,7 +30,7 @@ def wait_elem_by_id(browser, elem_id):
         WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.ID, elem_id))
         )
-    except NoSuchElementException:
+    except TimeoutException:
         return False
     return True
 

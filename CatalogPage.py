@@ -1,4 +1,4 @@
-from methods import wait_elem_by_xpath, get_elem_by_xpath, get_prices_list, get_elem_by_id, wait_elem_by_id
+from methods import get_prices_list, get_elem_by_id, wait_elem_by_id
 from selenium.webdriver.common.by import By
 
 
@@ -20,4 +20,5 @@ class CatalogPage:
         return wait_elem_by_id(self.browser, self.catalog_product_list_id)
 
     def get_list_of_all_prices_from_table(self):
-        return get_prices_list(self.get_catalog_product_list().find_elements(By.XPATH, self.price_xpath))
+        return get_prices_list(self.get_catalog_product_list()
+                               .find_elements(By.XPATH, self.price_xpath))

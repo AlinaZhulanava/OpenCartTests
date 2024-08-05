@@ -21,7 +21,8 @@ def test_add_to_cart(browser, get_url):
     main_page.find_first_product()
 
     scroll_to_elem(main_page.browser, main_page.get_add_button())
-    ActionChains(main_page.browser).move_to_element(main_page.get_add_button()).perform()
+    (ActionChains(main_page.browser)
+     .move_to_element(main_page.get_add_button()).perform())
     main_page.click_add_button()
 
     scroll_to_elem(main_page.browser, main_page.get_elem_for_compare())

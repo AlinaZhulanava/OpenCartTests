@@ -19,7 +19,6 @@ class LoginPage:
     def open_page(self):
         self.browser.get(self.url)
 
-
     def get_email(self):
         return get_elem_by_xpath(self.browser, self.email_xpath)
 
@@ -49,4 +48,3 @@ class LoginPage:
 
     def find_account_logout_label(self):
         return wait_elem_by_xpath(self.browser, self.label_account_logout)
-

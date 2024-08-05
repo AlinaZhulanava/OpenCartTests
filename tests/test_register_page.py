@@ -1,4 +1,3 @@
-import time
 from MainPage import MainPage
 from RegisterPage import RegisterPage
 from TopPanel import TopPanel
@@ -6,7 +5,8 @@ from methods import scroll_to_elem
 
 
 def test_search_registration(browser, get_url):
-    registration_page = RegisterPage(browser, get_url + "/index.php?route=account/register")
+    registration_page = RegisterPage(browser, get_url +
+                                     "/index.php?route=account/register")
     registration_page.open_page()
 
     assert registration_page.find_register_label() is True
@@ -16,7 +16,8 @@ def test_register_new_user(browser, get_url):
     main_page = MainPage(browser, get_url)
     main_page.open_page()
 
-    register_page = RegisterPage(browser, get_url + "en-gb?route=account/register")
+    register_page = RegisterPage(browser, get_url +
+                                 "en-gb?route=account/register")
 
     top_panel = TopPanel(browser, get_url)
     top_panel.click_my_account_button()

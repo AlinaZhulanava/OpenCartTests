@@ -16,7 +16,8 @@ class RegisterPage:
     user_email = "charlibrowm1@gmail.com"
     user_password = "password"
 
-    account_created_label_xpath = "//h1[text()='Your Account Has Been Created!']"
+    account_created_label_xpath = \
+        "//h1[text()='Your Account Has Been Created!']"
 
     def __init__(self, browser, url):
         self.browser = browser

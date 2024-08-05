@@ -1,5 +1,3 @@
-import time
-
 from AdminPage import AdminPage
 
 
@@ -50,7 +48,7 @@ def test_delete_product(browser, get_url):
     admin_page.open_admin_menu_catalog_products()
 
     admin_page.choose_product_to_delete()
-    #admin_page.choose_product_to_delete()
+    # admin_page.choose_product_to_delete()
 
     admin_page.click_delete_product_button()
     admin_page.submit_alert()

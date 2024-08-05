@@ -30,6 +30,3 @@ def test_change_currency(browser, get_url):
     assert top_panel.get_displayed_currency() == currency_change_chain[1]
     top_panel.change_currency_to_another(currency_change_chain[0])
     assert top_panel.get_displayed_currency() == currency_change_chain[0]
-
-
-

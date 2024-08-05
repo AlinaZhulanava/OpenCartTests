@@ -1,6 +1,5 @@
-import time
-
-from methods import get_elem_by_xpath, wait_elem_by_xpath, get_elem_by_id, get_alert
+from methods import (get_elem_by_xpath, wait_elem_by_xpath,
+                     get_elem_by_id, get_alert)
 
 
 class AdminPage:
@@ -31,7 +30,8 @@ class AdminPage:
     new_product_seo_keyword_id = "input-keyword-0-1"
     user_new_product_seo_keyword = "1"
 
-    alert_add_product_success_xpath = "//div[@class='alert alert-success alert-dismissible']"
+    alert_add_product_success_xpath = \
+        "//div[@class='alert alert-success alert-dismissible']"
 
     product_to_delete_xpath = "//input[@value='42']"
 
@@ -84,10 +84,12 @@ class AdminPage:
         self.get_admin_menu_catalog().click()
 
     def find_admin_menu_catalog_products(self):
-        return wait_elem_by_xpath(self.browser, self.admin_menu_catalog_products_xpath)
+        return wait_elem_by_xpath(self.browser,
+                                  self.admin_menu_catalog_products_xpath)
 
     def get_admin_menu_catalog_products_link(self):
-        elem = get_elem_by_xpath(self.browser, self.admin_menu_catalog_products_xpath)
+        elem = get_elem_by_xpath(self.browser,
+                                 self.admin_menu_catalog_products_xpath)
         return elem.get_attribute('href')
 
     def open_admin_menu_catalog_products(self):
@@ -111,7 +113,8 @@ class AdminPage:
         return get_elem_by_id(self.browser, self.new_product_meta_tag_id)
 
     def fill_new_product_meta_tag(self):
-        self.get_new_product_meta_tag().send_keys(self.user_new_product_meta_tag)
+        (self.get_new_product_meta_tag()
+         .send_keys(self.user_new_product_meta_tag))
 
     def get_new_product_data(self):
         return get_elem_by_xpath(self.browser, self.new_product_data_xpath)
@@ -135,8 +138,8 @@ class AdminPage:
         return get_elem_by_id(self.browser, self.new_product_seo_keyword_id)
 
     def fill_new_product_seo_keyword(self):
-        self.get_new_product_seo_keyword().send_keys(self.user_new_product_seo_keyword)
-
+        (self.get_new_product_seo_keyword()
+         .send_keys(self.user_new_product_seo_keyword))
 
     def get_save_product_button(self):
         return get_elem_by_xpath(self.browser, self.save_product_button_xpath)
@@ -145,17 +148,18 @@ class AdminPage:
         self.get_save_product_button().click()
 
     def find_alert_add_product_success(self):
-        return wait_elem_by_xpath(self.browser, self.alert_add_product_success_xpath)
+        return wait_elem_by_xpath(self.browser,
+                                  self.alert_add_product_success_xpath)
 
     def get_delete_product_button(self):
-        return get_elem_by_xpath(self.browser, self.delete_product_button_xpath)
+        return get_elem_by_xpath(self.browser,
+                                 self.delete_product_button_xpath)
 
     def click_delete_product_button(self):
         self.get_delete_product_button().click()
 
     def submit_alert(self):
         get_alert(self.browser).accept()
-
 
     def get_product_to_delete(self):
         return get_elem_by_xpath(self.browser, self.product_to_delete_xpath)

@@ -1,5 +1,4 @@
 from methods import get_elem_by_xpath, wait_elem_by_xpath
-import time
 
 
 class TopPanel:
@@ -57,7 +56,8 @@ class TopPanel:
             return "GBP"
 
     def get_currency_choose_button(self):
-        return get_elem_by_xpath(self.browser, self.currency_choose_button_xpath)
+        return get_elem_by_xpath(self.browser,
+                                 self.currency_choose_button_xpath)
 
     def click_currency_choose_button(self):
         self.get_currency_choose_button().click()
