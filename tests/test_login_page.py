@@ -1,10 +1,13 @@
 from LoginPage import LoginPage
 from TopPanel import TopPanel
+import allure
 
 
 def test_user_login(browser, get_url):
-    login_page = LoginPage(browser, get_url + "en-gb?route=account/login")
-    login_page.open_page()
+    url = get_url + "en-gb?route=account/login"
+    with allure.step(f"Opening {url} in {browser}"):
+        login_page = LoginPage(browser, url)
+        login_page.open_page()
 
     login_page.fill_email()
     login_page.fill_password()

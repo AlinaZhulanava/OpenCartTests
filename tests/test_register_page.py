@@ -1,3 +1,6 @@
+import allure
+import pytest
+
 from MainPage import MainPage
 from RegisterPage import RegisterPage
 from TopPanel import TopPanel
@@ -5,19 +8,30 @@ from methods import scroll_to_elem
 
 
 def test_search_registration(browser, get_url):
-    registration_page = RegisterPage(browser, get_url +
-                                     "/index.php?route=account/register")
-    registration_page.open_page()
+    url = get_url + "/index.php?route=account/register"
+    with allure.step(f"Open {url} in {browser}"):
+        registration_page = RegisterPage(browser, url)
+        registration_page.open_page()
+
+    with allure.step("Checking if Register label presented"):
+        if registration_page.find_register_label() is False:
+            allure.attach(
+                body=browser.get_screenshot_as_png(),
+                name="screenshot_image",
+                attachment_type=allure.attachment_type.PNG
+            )
 
     assert registration_page.find_register_label() is True
 
 
 def test_register_new_user(browser, get_url):
-    main_page = MainPage(browser, get_url)
-    main_page.open_page()
+    url = get_url + "en-gb?route=account/register"
 
-    register_page = RegisterPage(browser, get_url +
-                                 "en-gb?route=account/register")
+    with allure.step(f"Open {url} in {browser}"):
+        main_page = MainPage(browser, get_url)
+        main_page.open_page()
+
+    register_page = RegisterPage(browser, url)
 
     top_panel = TopPanel(browser, get_url)
     top_panel.click_my_account_button()
